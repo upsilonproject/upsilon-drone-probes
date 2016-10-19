@@ -27,7 +27,6 @@ node {
 
 	deleteDir()
 
-	println "foo"
 	sh './make.sh'
 
 	stash includes: '*.zip', name: 'binaries'
