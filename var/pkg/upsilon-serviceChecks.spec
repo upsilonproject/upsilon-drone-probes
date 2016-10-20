@@ -22,7 +22,7 @@ rm -rf $RPM_BUILD_DIR/*
 %setup -q -n upsilon-serviceChecks
 
 %build
-mkdir -p {%buildroot}/usr/sbin
+mkdir -p %{buildroot}/usr/sbin
 cp src/* %{buildroot}/usr/sbin/
 
 %files
