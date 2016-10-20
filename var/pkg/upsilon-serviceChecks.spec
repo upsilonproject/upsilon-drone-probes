@@ -29,6 +29,6 @@ cp src/* %{buildroot}/usr/sbin/
 /usr/sbin/*
 
 %changelog
-* Fri Jun 06 2016 James Read <contact@jwread.com> 1.0.0-1
+* Mon Jun 06 2016 James Read <contact@jwread.com> 1.0.0-1
 	Initial version.
 
