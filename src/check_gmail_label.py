@@ -5,7 +5,7 @@ import imaplib
 import email
 import datetime
 from argparse import ArgumentParser
-from upsilonCommon.serviceHelpers import exit
+from upsilon.serviceHelpers import exit
 
 parser = ArgumentParser()
 parser.add_argument('--email', required = True)

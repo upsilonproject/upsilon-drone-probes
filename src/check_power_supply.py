@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from upsilonCommon.serviceHelpers import *
+from upsilon.serviceHelpers import *
 from os import listdir
 from os.path import join
 
