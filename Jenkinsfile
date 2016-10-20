@@ -25,7 +25,7 @@ def buildRpm(dist) {
 
 	prepareEnv()
                                                                                                                                                                       
-    sh 'unzip -jo SOURCES/upsilon-serviceChecks-*.zip "upsilon-serviceChecks-*/var/pkg/upsilon-serviceChecks.spec" "upsilon-serviceChecks-*/.buildid.rpmmacro" -d SPECS/'
+    sh 'unzip -jo SOURCES/upsilon-serviceChecks.zip "upsilon-serviceChecks/var/pkg/upsilon-serviceChecks.spec" "upsilon-serviceChecks/.buildid.rpmmacro" -d SPECS/'
     sh "find ${env.WORKSPACE}"                                                     
                                                                                    
     sh "rpmbuild -ba SPECS/upsilon-serviceChecks.spec --define '_topdir ${env.WORKSPACE}' --define 'dist ${dist}'"
