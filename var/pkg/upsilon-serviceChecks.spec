@@ -19,7 +19,7 @@ Monitoring software
 
 %prep
 rm -rf $RPM_BUILD_DIR/*
-%setup -q -n upsilon-serviceChecks-%{tag}
+%setup -q -n upsilon-serviceChecks
 
 %build
 mkdir -p {%buildroot}/usr/sbin
