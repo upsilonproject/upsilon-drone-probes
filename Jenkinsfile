@@ -30,7 +30,7 @@ node {
 
 	sh './make.sh'
 
-	stash includes: '*.zip', name: 'binaries'
+	stash includes: 'dist/*.zip', name: 'binaries'
 }
 
 stage "Package"
