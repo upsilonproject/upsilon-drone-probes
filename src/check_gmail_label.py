@@ -16,6 +16,9 @@ from upsilon import serviceHelpers
 parser = argparse.ArgumentParser(parents=[tools.argparser])
 parser.add_argument('labels', nargs = '*', default = []);
 parser.add_argument('--csv', action = 'store_true');
+parser.add_argument('--metricsTotal', action = 'store_true');
+parser.add_argument('--countCritical', default = 30)
+parser.add_argument('--countWarning', default = 5)
 args = parser.parse_args();
 
 # If modifying these scopes, delete your previously saved credentials
@@ -52,6 +55,15 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
+def getKarma(karma):
+    if karma > args.countCritical: 
+        return "BAD"
+
+    if karma > args.countWarning:
+        return "WARNING"
+
+    return "GOOD"
+
 def main():
     """Shows basic usage of the Gmail API.
 
@@ -85,9 +97,9 @@ def main():
         else:
             print(label_info['name'], label_info['threadsUnread'], '/', label_info['threadsTotal'])
 
-        metric = metadata.addMetric(label_info['name'], str(label_info['threadsUnread']) + '/' + str(label_info['threadsTotal']), )
-        metric['total'] = label_info['threadsTotal']
-        metric['unread'] = label_info['threadsUnread']
+        if args.metricsTotal: 
+            metric = metadata.addMetric(label_info['id'] + '_total', label_info['threadsTotal'], getKarma(label_info['threadsTotal']))
+            metric['caption'] = label_info['name'] + ' Total'
 
     serviceHelpers.exitOk(metadata);
 
