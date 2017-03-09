@@ -19,12 +19,12 @@ parser.add_argument('--csv', action = 'store_true');
 parser.add_argument('--metricsTotal', action = 'store_true');
 parser.add_argument('--countCritical', default = 30)
 parser.add_argument('--countWarning', default = 5)
+parser.add_argument('--clientSecretFile', default = 'client_secrets.json')
 args = parser.parse_args();
 
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/gmail-python-quickstart.json
 SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.metadata'
-CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'Gmail API Python Quickstart'
 
 def get_credentials():
@@ -46,7 +46,7 @@ def get_credentials():
     store = Storage(credential_path)
     credentials = store.get()
     if not credentials or credentials.invalid:
-        flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
+        flow = client.flow_from_clientsecrets(args.clientSecretFile, SCOPES)
         flow.user_agent = APPLICATION_NAME
         if args:
             credentials = tools.run_flow(flow, store, args)
