@@ -1,4 +1,4 @@
-#!/bin/perl
+#!/usr/bin/perl
 use Monitoring::Plugin;
 use JSON;
 use strict;
