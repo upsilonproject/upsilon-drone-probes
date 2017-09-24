@@ -174,6 +174,9 @@ def main():
             metric = metadata.addMetric(label_info['id'] + '_total', label_info['threadsTotal'], getKarma(label_info['threadsTotal']))
             metric['caption'] = label_info['name'] + ' Total'
 
+            metric = metadata.addMetric(label_info['id'] + '_unread', label_info['threadsUnread'], getKarma(label_info['threadsUnread']))
+            metric['caption'] = label_info['name'] + ' Unread'
+
         if args.evalMessages:
             threadTimestamps = evalMessages(service, label);
 
