@@ -22,9 +22,11 @@ for index in blob["lights"]:
 
   if light["state"]["on"]:
     karma = "GOOD"
+    description = "ON"
   else:
     karma = "BAD"
+    description = "OFF"
 
-  metadata.addMetric(light["name"], light["state"]["on"], karma)
+  metadata.addMetric(light["name"], description, karma)
 
 exit(metadata=metadata);
