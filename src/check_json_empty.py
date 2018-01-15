@@ -22,9 +22,16 @@ except:
 
     exitCritical()
 
+md = clsmetadata()
+
+for thing in jsonStructure:
+    md.addSubresult(thing)
+
+message = str(len(jsonStructure)) + " items in the list"
+
 if len(jsonStructure) > args.countCritical:
-    exitCritical()
+    exitCritical(md, message)
 elif len(jsonStructure) > args.countWarning:
-    exitWarning()
+    exitWarning(md, message)
 else:
     exitOk()
