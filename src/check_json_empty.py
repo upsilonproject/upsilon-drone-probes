@@ -25,7 +25,13 @@ except:
 md = clsmetadata()
 
 for thing in jsonStructure:
-    md.addSubresult(thing)
+    title = "untitled"
+
+    for key in ["name", "title"]:
+      if key in thing:
+          title = thing[key]
+       
+    md.addSubresult(title, karma = "WARNING")
 
 message = str(len(jsonStructure)) + " items in the list"
 
