@@ -22,9 +22,11 @@ parser.add_argument('labels', nargs = '*', default = []);
 parser.add_argument('--csv', action = 'store_true');
 parser.add_argument('--metricsTotal', action = 'store_true');
 parser.add_argument('--evalMessages', action = 'store_true');
+parser.add_argument('--saveMessages', action = 'store_true');
 parser.add_argument('--countCritical', default = 30)
 parser.add_argument('--countWarning', default = 5)
 parser.add_argument('--clientSecretFile', default = 'client_secrets.json')
+parser.add_argument("--login", action = 'store_true')
 args = parser.parse_args();
 
 # If modifying these scopes, delete your previously saved credentials
@@ -116,6 +118,13 @@ def evalMessages(service, label):
                 latestTimestamp = int(message['internalDate']) / 1000
 
         timestamps.append(datetime.fromtimestamp(latestTimestamp))
+
+    if args.saveMessages:
+        f = open("/tmp/emails", "w")
+        json.dump(evaledThreads, f)
+        f.close()
+
+        print("Messages saved to /tmp/emails")
 
     return timestamps
 
