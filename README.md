@@ -1,2 +1,2 @@
-upsilon-serviceChecks
+upsilon-drone-probes
 =====================
