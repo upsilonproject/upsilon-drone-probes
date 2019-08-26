@@ -3,6 +3,8 @@
 from upsilon.serviceHelpers import *
 
 metadata = clsmetadata()
-metadata.addSubresult("testing", comment = "testing")
+
+release, _ = easyexec(["cat", "/etc/redhat-release"]);
+metadata.addSubresult("release", value = release)
 
 exit(metadata=metadata)
