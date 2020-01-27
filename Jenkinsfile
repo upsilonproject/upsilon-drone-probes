@@ -17,7 +17,7 @@ def prepareEnv() {
     sh "find ${env.WORKSPACE}"                                                     
                                                                                    
     sh 'mkdir -p SPECS SOURCES'                                                    
-    sh "cp dist/*.zip SOURCES/upsilon-serviceChecks.zip"                      
+    sh "cp dist/*.zip SOURCES/upsilon-drone-probes.zip"                      
 }                                                                                 
 
 def buildRpm(dist) {                                                               
@@ -25,10 +25,10 @@ def buildRpm(dist) {
 
 	prepareEnv()
                                                                                                                                                                       
-    sh 'unzip -jo SOURCES/upsilon-serviceChecks.zip "upsilon-serviceChecks/var/pkg/upsilon-serviceChecks.spec" "upsilon-serviceChecks/.buildid.rpmmacro" -d SPECS/'
+    sh 'unzip -jo SOURCES/upsilon-drone-probes.zip "upsilon-drone-probes/var/pkg/upsilon-drone-probes.spec" "upsilon-drone-probes/.buildid.rpmmacro" -d SPECS/'
     sh "find ${env.WORKSPACE}"                                                     
                                                                                    
-    sh "rpmbuild -ba SPECS/upsilon-serviceChecks.spec --define '_topdir ${env.WORKSPACE}' --define 'dist ${dist}'"
+    sh "rpmbuild -ba SPECS/upsilon-drone-probes.spec --define '_topdir ${env.WORKSPACE}' --define 'dist ${dist}'"
                                                                                    
     archive 'RPMS/noarch/*.rpm'                                                    
 }                    
