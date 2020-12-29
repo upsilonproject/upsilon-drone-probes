@@ -4,6 +4,7 @@ from __future__ import print_function
 import httplib2
 import os
 import json
+import csv
 
 from googleapiclient import discovery, http
 from oauth2client import client
@@ -73,6 +74,10 @@ def getKarma(karma):
 
 def onMessage(req, resp, err):
     global evaledThreads
+
+    print("onMessage", resp)
+    print("----")
+
     evaledThreads.append(resp)
 
 evaledThreads = []
@@ -94,16 +99,23 @@ def evalMessages(service, label):
         threads.extend(response['threads'])
         print("getting more messages:" + str(len(threads)))
 
-    batch = service.new_batch_http_request();
 
-    for thread in threads:
-        batch.add(service.users().threads().get(userId = 'me', id = thread['id'], format = "minimal"), callback=onMessage)
+    print("Got all messages")
 
     global evaledThreads
     evaledThreads = []
+    count = 1
+
+    for thread in threads:
+        batch = service.new_batch_http_request();
+        batch.add(service.users().threads().get(userId = 'me', id = thread['id'], format = "metadata"), callback=onMessage)
+        count += 1
+
+        if count > 50:
+            batch.execute();
 
     batch.execute();
-
+ 
     print("finished eval messages")
 
     timestamps = []
@@ -114,7 +126,7 @@ def evalMessages(service, label):
             continue;
 
         for message in thread['messages']:
-            if message['internalDate'] > latestTimestamp:
+            if int(message['internalDate']) > latestTimestamp:
                 latestTimestamp = int(message['internalDate']) / 1000
 
         timestamps.append(datetime.fromtimestamp(latestTimestamp))
@@ -128,6 +140,7 @@ def evalMessages(service, label):
 
     return timestamps
 
+    
 def addMetricsForTimestamps(metadata, labelName, threadTimestamps):
     now = datetime.today()
 
