@@ -1,21 +1,18 @@
 #!/usr/bin/python
 
-from upsilon.serviceHelpers import *
-from subprocess import Popen, PIPE
+from upsilon.service import ServiceController, easyexec
 from argparse import ArgumentParser
 import re
 
-metadata = clsmetadata()
+srv = ServiceController()
 
 parser = ArgumentParser();
 args = parser.parse_args()
 
-
 def getVirshList():
-    p = Popen(["virsh", "list", "--all"], stdout = PIPE, stderr = PIPE)
-    out, err = p.communicate()
+    stdout, stderr = easyexec(["virsh", "list", "--all"])
 
-    return out.strip().split("\n")[2:]
+    return stdout.strip().split("\n")[2:]
 
 for line in getVirshList():
     m = re.search("([-\d]+)\s+(\S+)\s+(.+)", line)
@@ -28,6 +25,6 @@ for line in getVirshList():
     else:
         karma = "BAD"
 
-    metadata.addMetric(m.group(2), value = m.group(3), karma = karma);
+    srv.addMetric(m.group(2), value = m.group(3), karma = karma);
 
-exit(metadata = metadata)
+srv.exitOk()

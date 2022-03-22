@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from upsilon.serviceHelpers import *
+from upsilon.service import ServiceController
 from argparse import ArgumentParser
 import csv
 
@@ -8,7 +8,7 @@ parser = ArgumentParser()
 parser.add_argument("filename")
 args = parser.parse_args();
 
-metadata = clsmetadata();
+srv = ServiceController();
 
 with open(args.filename) as csvfile:
     reader = csv.reader(csvfile)
@@ -22,7 +22,7 @@ with open(args.filename) as csvfile:
     recentValues = lines[-1:][0]
 
     for index in range(len(headers)):
-        metadata.addMetric(headers[index].strip(), recentValues[index].strip())
+        srv.addMetric(headers[index].strip(), recentValues[index].strip())
 
 
-exit(metadata = metadata)
+srv.exit()

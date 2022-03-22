@@ -16,7 +16,7 @@ import time
 
 import argparse
 
-from upsilon import serviceHelpers
+from upsilon.service import ServiceController
 
 parser = argparse.ArgumentParser(parents=[tools.argparser])
 parser.add_argument('labels', nargs = '*', default = []);
@@ -178,7 +178,7 @@ def main():
         for label in args.labels:
             labels.append({'id': label})
 
-    metadata = serviceHelpers.clsmetadata()
+    metadata = ServiceController()
 
     if not labels:
         print('No labels found.')
@@ -204,7 +204,7 @@ def main():
 
             addMetricsForTimestamps(metadata, label_info['name'], threadTimestamps)
 
-    serviceHelpers.exitOk(metadata);
+    metdata.exitOk()
 
 
 if __name__ == '__main__':

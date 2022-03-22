@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-from upsilon.serviceHelpers import *
+from upsilon.service import *
 from upsilon.http import *
 
-metadata = clsmetadata()
+srv = ServiceController()
 
 from argparse import ArgumentParser
 
@@ -27,6 +27,6 @@ for index in blob["lights"]:
     karma = "BAD"
     description = "OFF"
 
-  metadata.addMetric(light["name"], description, karma)
+  srv.addMetric(light["name"], description, karma)
 
-exit(metadata=metadata);
+srv.exit()

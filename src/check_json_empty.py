@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
 import argparse
-import urllib2
-from upsilon.serviceHelpers import *
+import urllib3
+from upsilon.service import ServiceController
 
 parser = argparse.ArgumentParser();
 parser.add_argument("baseurl")
@@ -17,12 +17,12 @@ content = urllib2.urlopen(args.baseurl).read()
 try:
     jsonStructure = json.loads(content);
 except: 
-    print "Could not parse JSON"
-    print content
+    print("Could not parse JSON")
+    print(content)
 
     exitCritical()
 
-md = clsmetadata()
+srv = ServiceController()
 
 for thing in jsonStructure:
     title = "untitled"
@@ -31,13 +31,13 @@ for thing in jsonStructure:
       if key in thing:
           title = thing[key]
        
-    md.addSubresult(title, karma = "WARNING")
+    srv.addSubresult(title, karma = "WARNING")
 
 message = str(len(jsonStructure)) + " items in the list"
 
 if len(jsonStructure) > args.countCritical:
-    exitCritical(md, message)
+    srv.exitCritical(message)
 elif len(jsonStructure) > args.countWarning:
-    exitWarning(md, message)
+    srv.exitWarning(message)
 else:
     exitOk()

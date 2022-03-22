@@ -1,17 +1,16 @@
 #!/usr/bin/python
 
-from upsilon.serviceHelpers import *
+from upsilon.service import ServiceController
 
 import time
 import feedparser
 import sys
 
 url = "http://feeds.bbci.co.uk/news/rss.xml"
-url = sys.argv[1]
 feed = feedparser.parse(url);
 
-metadata = clsmetadata();
-metadata['news'] = []
+srv = ServiceController();
+srv['news'] = []
 
 for news in feed['entries']:
 	if "updated_parsed" in news:
@@ -23,9 +22,9 @@ for news in feed['entries']:
 		"title": news['title'],
 		"url": news['id'],
 		"time": time.strftime("%Y-%m-%d %H:%S", date),
-		"source": sys.argv[2]
+		"source": url
 	}
 
-	metadata['news'].append(story);
+	srv['news'].append(story);
 
-exit(OK, metadata, "News checked.")
+srv.exitOk("News checked.")
